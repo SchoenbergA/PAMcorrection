@@ -4,7 +4,7 @@
 #' @docType package
 #' @title PAMcorrection - a tool for PAM correction
 #' @description The \code{PAMcorrection} package is used to estimate and test correction vlaues for the PAM using control values.
-#' @author Andreas Schönberg
+#' @author Andreas SchÃ¶nberg
 #' @keywords package
 NULL
 #' @docType data
