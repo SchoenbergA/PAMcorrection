@@ -48,7 +48,7 @@ head(dat)
 # visualize Control and PAM values
 estPAMcorr(ctr = dat$CTR,pam = dat$PAM)
 
-# view borders of dialect 
+# view borders of dialect
 estPAMcorr(ctr = dat$CTR,pam = dat$PAM,al = c(9,15,21,36))
 
 # use a correction factor
@@ -59,7 +59,7 @@ estPAMcorr(ctr = dat$CTR,pam = dat$PAM,al = c(9,15,21,36),cf = cf)
 # use absolute value for correction
 cfa <- abs(mean(dat$CTR-dat$PAM))
 
-estPAMcorr(ctr = dat$CTR,pam = dat$PAM,al = c(9,15,21,36),cf = cfa,modef = F)
+estPAMcorr(ctr = dat$CTR,pam = dat$PAM,al = c(9,15,21,36),cf = cfa,modef = FALSE)
 }
 \author{
 Andreas Schönberg
