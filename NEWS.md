@@ -1,3 +1,7 @@
+# PAMcorrection 0.0.0.93
+
+* add estPAMcorr2 - now can sort data and has simplified input data but need correct format in df (cannot select pam and ctr is alternative names)
+
 # PAMcorrection 0.0.0.91
 
 Develop version

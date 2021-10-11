@@ -6,6 +6,7 @@
 #' @param al numeric - a vector of numeric values on the x axes to draw lines. Default=0
 #' @param modef bolean - If TRUE uses input 'cf' to multiply PAM, if FALSE uses
 #' substracts 'cf' from PAM. Default= TRUE
+#' @param yl numeric - ylim adjustment. Default=2
 
 #' @return returns a plot containing the original PAM values, control values and
 #' corrected PAM values along the absolute difference between corrected PAM and
@@ -45,7 +46,7 @@
 
 
 
-estPAMcorr <- function(ctr,pam,cf=NULL,al=-1,modef=T){
+estPAMcorr <- function(ctr,pam,cf=NULL,al=-1,modef=T,yl=2){
 
   # check input
   #mean(ctr/pam)
@@ -58,7 +59,7 @@ estPAMcorr <- function(ctr,pam,cf=NULL,al=-1,modef=T){
     }
     cat("using factor for correction",sep="\n")
     plot((ctr),col="blue",
-         ylim=c(0,2),
+         ylim=c(0,yl),
          main=paste0("PAM Correction factor ",cf),
          #sub =paste0("empty yet"),
          xlab="ID",
@@ -80,6 +81,7 @@ estPAMcorr <- function(ctr,pam,cf=NULL,al=-1,modef=T){
     # labels
     mtext(paste0("absDiffSums: ",round(sum(abs(div)),2)),line = -18, adj = 0.01)
     mtext(paste0("absDiffMean: ",round(mean(abs(div)),2)),line = -19, adj = 0.01)
+    mtext(paste0("absDiffSD: ",round(sd(abs(div)),2)),line = -20, adj = 0.01)
     # legend
     legend("topleft", legend=c("PAM", "PAM_corrected","Control","Difference"),
            col=c("orange","red","blue", "green"), lty=1, cex=0.8)
@@ -91,7 +93,7 @@ estPAMcorr <- function(ctr,pam,cf=NULL,al=-1,modef=T){
     }
     cat("using absolute value for correction",sep="\n")
     plot((ctr),col="blue",
-         ylim=c(0,2),
+         ylim=c(0,yl),
          main=paste0("PAM Correction absolut -",cf),
          #sub =paste0("empty yet"),
          xlab="ID",
@@ -113,6 +115,7 @@ estPAMcorr <- function(ctr,pam,cf=NULL,al=-1,modef=T){
     # labels
     mtext(paste0("absDiffSums: ",round(sum(abs(div)),2)),line = -18, adj = 0.01)
     mtext(paste0("absDiffMean: ",round(mean(abs(div)),2)),line = -19, adj = 0.01)
+    mtext(paste0("absDiffSD: ",round(sd(abs(div)),2)),line = -20, adj = 0.01)
     # legend
     legend("topleft", legend=c("PAM", "PAM_corrected","Control","Difference"),
            col=c("orange","red","blue", "green"), lty=1, cex=0.8)
