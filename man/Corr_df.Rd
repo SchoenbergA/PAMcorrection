@@ -4,7 +4,7 @@
 \alias{Corr_df}
 \title{Corr_df - Automated correction of PAM using mean for specifiedy classes.}
 \usage{
-Corr_df(df, pos1, pos2 = NULL)
+Corr_df(df, pos1, pos2 = NULL, modef = T)
 }
 \arguments{
 \item{df}{data.frame - containing Control and PAM values with colnames "CTR" and "PAM"}
@@ -13,6 +13,10 @@ Corr_df(df, pos1, pos2 = NULL)
 
 \item{pos2}{numeric - Additional column of data frame which should be used to correct by mean.
 Only necessary if the correction should use subgroups for the data in 'pos1'}
+
+\item{modef}{\itemize{
+\item bolean - if TRUE uses factor correction, if FALSE uses absolute values. Default=TRUE.
+}}
 }
 \value{
 returns a data.frame with the corrected PAM values and prints the respective mean vlaues for each class or combination of classes.
@@ -33,6 +37,10 @@ corrected <-Corr_df(dat,pos1 = 3)
 which(colnames(dat)=="generation")
 which(colnames(dat)=="dilect")
 corrected <-Corr_df(dat,pos1 = 3,pos2 = 2)
+
+# use absolute values
+corrected <-Corr_df(dat,pos1 = 3,modef = F)
+corrected <-Corr_df(dat,pos1 = 3,pos2 = 2,modef = F)
 }
 \author{
 Andreas Schönberg

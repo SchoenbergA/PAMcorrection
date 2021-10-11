@@ -1,3 +1,8 @@
+# PAMcorrection 0.0.0.95
+Develop version
+
+* add absolute value mode to 'Corr_df'
+
 # PAMcorrection 0.0.0.94
 Develop version
 
