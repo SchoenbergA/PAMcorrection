@@ -27,6 +27,28 @@
 #' # load data
 #' dat <- read.csv(system.file("extdata","exp_PAM.csv",package = "PAMcorrection"))
 #' head(dat)
+#'
+#' # plot control and PAM
+#' estPAMcorr2(dat)
+#'
+#' # adjust y limit
+#' estPAMcorr2(dat,yl = 4)
+#'
+#' # use vertical lines
+#' abl <- seq(10,40,10)
+#' estPAMcorr2(dat,yl = 4,al = abl)
+#'
+#' # order values by PAM
+#' estPAMcorr2(dat,sortby = "PAM")
+#'
+#' # get correction value by mean
+#' mf <-mean(dat$CTR/dat$PAM) # factor
+#' ma <-mean(dat$PAM-dat$CTR) # absolute
+#'
+#' # plot correction
+#' estPAMcorr2(dat,sortby = "PAM",cf = mf)# for factor
+#' # for absolute use 'modef=F'
+#' estPAMcorr2(dat,sortby = "PAM",cf = ma,modef = F) # for absolute
 
 
 
