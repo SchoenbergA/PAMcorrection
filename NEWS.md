@@ -1,6 +1,11 @@
 # PAMcorrection 0.0.0.95
 Develop version
 
+* add stats for 'Corr_df'. Now prints amount of class objects and the mean value used to correct in a dataframe (in function printed not output)
+
+# PAMcorrection 0.0.0.95
+Develop version
+
 * add absolute value mode to 'Corr_df'
 
 # PAMcorrection 0.0.0.94
