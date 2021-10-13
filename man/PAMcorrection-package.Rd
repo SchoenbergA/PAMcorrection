@@ -5,7 +5,7 @@
 \alias{PAMcorrection - package}
 \title{PAMcorrection - a tool for PAM correction}
 \description{
-The \code{PAMcorrection} package is used to estimate and test correction vlaues for the PAM using control values.
+The \code{PAMcorrection} package is used to estimate and test correction values for the PAM using control values.
 }
 \details{
 PAMcorrection

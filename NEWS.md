@@ -1,4 +1,12 @@
-# PAMcorrection 0.0.0.95
+# PAMcorrection 0.0.0.97
+Develop version
+
+* change input for 'Corr_df': from position to colname.
+* 'Corr_df' now saves result in new column named 'PAM_corr' (which is used in 'plotPAMcorrection')
+* add new function ' plotPAMcorrection'. Alternative version of 'estPAMcorr2' without in-function correction and advanced visualisation.
+* improve printed results and add sigh for either factor or absolute values
+
+# PAMcorrection 0.0.0.96
 Develop version
 
 * add stats for 'Corr_df'. Now prints amount of class objects and the mean value used to correct in a dataframe (in function printed not output)

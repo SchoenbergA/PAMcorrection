@@ -1,6 +1,6 @@
 Package: PAMcorrection
 Title: Package for PAM correction
-Version: 0.0.0.96
+Version: 0.0.0.97
 Authors@R: 
     person(given = "Andreas",
            family = "Schönberg",

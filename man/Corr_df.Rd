@@ -2,27 +2,34 @@
 % Please edit documentation in R/Corr_df.R
 \name{Corr_df}
 \alias{Corr_df}
-\title{Corr_df - Automated correction of PAM using mean for specifiedy classes.}
+\title{Corr_df - Automated correction of PAM using mean for specified attributes.}
 \usage{
-Corr_df(df, pos1, pos2 = NULL, modef = T)
+Corr_df(df, att1 = NULL, att2 = NULL, modef = T)
 }
 \arguments{
 \item{df}{data.frame - containing Control and PAM values with colnames "CTR" and "PAM"}
 
-\item{pos1}{numeric - Column of data frame which should be used to correct by mean.}
+\item{att1}{character - Column name of data frame which should be used to correct by mean. If missing, will
+use the global mean to correct PAM.}
 
-\item{pos2}{numeric - Additional column of data frame which should be used to correct by mean.
+\item{att2}{character - Additional column name of data frame which should be used to correct by mean.
 Only necessary if the correction should use subgroups for the data in 'pos1'}
 
 \item{modef}{\itemize{
-\item bolean - if TRUE uses factor correction, if FALSE uses absolute values. Default=TRUE.
+\item boolean - if TRUE uses factor correction, if FALSE uses absolute values. Default=TRUE.
 }}
 }
 \value{
-returns a data.frame with the corrected PAM values and prints the respective mean vlaues for each class or combination of classes.
+returns a data.frame with an additional column "PAM_corr" with the corrected PAM values
+and prints the respective mean values for each class or combination of classes.
 }
 \description{
-visualizes the correction of PAM values by correction value.
+uses the mean for specified subgroups to correct the PAM values.
+}
+\note{
+If used without any attributes will unse the global mean over all values to correct PAM. IF 'att1' is set
+will calculate the mean for each group in 'att1' to correct PAM. IF 'att2' is given will use the mean for each group
+with the combination for each attribute.
 }
 \examples{
 # load data
@@ -30,17 +37,14 @@ dat <- read.csv(system.file("extdata","exp_PAM.csv",package = "PAMcorrection"))
 head(dat)
 
 # correct df by means for "generation"
-which(colnames(dat)=="generation")
-corrected <-Corr_df(dat,pos1 = 3)
+corrected <-Corr_df(dat,att1 = "generation")
 
 # use two classes (means for each generation depending on dilect)
-which(colnames(dat)=="generation")
-which(colnames(dat)=="dilect")
-corrected <-Corr_df(dat,pos1 = 3,pos2 = 2)
+corrected <-Corr_df(dat,att1 = "generation",att2 = "dilect")
 
 # use absolute values
-corrected <-Corr_df(dat,pos1 = 3,modef = F)
-corrected <-Corr_df(dat,pos1 = 3,pos2 = 2,modef = F)
+corrected <-Corr_df(dat,att1 = "generation",modef = F)
+corrected <-Corr_df(dat,att1 = "generation",att2 = "dilect",modef = F)
 }
 \author{
 Andreas Schönberg

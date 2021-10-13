@@ -3,3 +3,4 @@
 export(Corr_df)
 export(estPAMcorr)
 export(estPAMcorr2)
+export(plotPAMcorr)
