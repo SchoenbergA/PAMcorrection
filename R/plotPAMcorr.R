@@ -38,7 +38,7 @@
 #' datf <-dat
 #' datf$PAM_corr <-dat$PAM * mean(dat$CTR/dat$PAM) # factor
 #' data <-dat
-#' data$PAM_corr <-dat$PAM * mean(dat$PAM-dat$CTR) # factor
+#' data$PAM_corr <-dat$PAM - mean(dat$PAM-dat$CTR) # factor
 #'
 #' # plot correction and use titel
 #' plotPAMcorr(datf,sortby = "PAM",titel="PAM corr factor")# for factor
