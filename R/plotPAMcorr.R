@@ -9,7 +9,6 @@
 #' @return returns a plot containing the original PAM (orange) and Control (blue) values along with the difference (grey).
 #' If corrected PAM values are available those will be plotted in red along with the differnece between the corrected PAM and COntrol values.
 #' Additionally prints the total Difference along with mean and standart divation for PAM or if given PAM corrected and Control
-#' @details
 #' @note For 'cf' it is recommended to calculate the mean of the difference
 #' between the original PAM and control values. Either use devision Control/PAM
 #' for factor and abs(PAM)-abs(Control) for correction by absolute values.

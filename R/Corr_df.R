@@ -19,6 +19,8 @@
 #' dat <- read.csv(system.file("extdata","exp_PAM.csv",package = "PAMcorrection"))
 #' head(dat)
 #'
+#' correct df by global mean
+#' corrected <-Corr_df(dat)
 #' # correct df by means for "generation"
 #' corrected <-Corr_df(dat,att1 = "generation")
 #'
