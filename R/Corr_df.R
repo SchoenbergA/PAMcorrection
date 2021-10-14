@@ -46,8 +46,8 @@ Corr_df <-function(df,att1=NULL,att2=NULL,modef=T){
       return(df)
     }
     if(modef==F){
-      df$PAM_corr <-df$PAM * mean(df$PAM - df$PAM)
-      cat(paste0("global mean (factor) "),mean(df$PAM - df$PAM))
+      df$PAM_corr <-df$PAM * mean(df$PAM - df$CTR)
+      cat(paste0("global mean (absolut) "),mean(df$PAM - df$CTR))
       return(df)
     }
 
