@@ -50,8 +50,8 @@ Corr_df <-function(df,att1=NULL,att2=NULL,modef=T){
       cat(paste0("global mean (absolut) "),mean(df$PAM - df$CTR))
       return(df)
     }
-
-  }
+  } # end global mean
+  ####
 
   # get col position of attributes
   if(is.null(att2)){
@@ -64,6 +64,7 @@ Corr_df <-function(df,att1=NULL,att2=NULL,modef=T){
 
   # init dataframe to store results
   re <-data.frame()
+
   # for factor correction
   if(modef==T){
   if(is.null(att2)){
