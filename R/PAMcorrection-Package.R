@@ -8,7 +8,7 @@
 #' @keywords package
 NULL
 #' @docType data
-#' @name lau_mspec - data
+#' @name exp_PAM - data
 #' @title Example Dataset
 #' @description A data.frame containing PAM and control values
 #' @format \code{"utils::read.csv"}

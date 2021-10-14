@@ -14,13 +14,9 @@ and optional "PAM_corr" for corrected PAM values.}
 
 \item{yl}{numeric - ylim adjustment. Default=2}
 
-\item{sortby}{\itemize{
-\item character - column name to reorder the inoput datafram 'df'. IF set the argument 'al' will not be used.
-}}
+\item{sortby}{character - column name to reorder the inoput datafram 'df'. IF set the argument 'al' will not be used.}
 
-\item{titel}{\itemize{
-\item character - desired maintitel for the plot . Default="PAMcorrection".
-}}
+\item{titel}{character - desired maintitel for the plot . Default="PAMcorrection".}
 }
 \value{
 returns a plot containing the original PAM (orange) and Control (blue) values along with the difference (grey).
@@ -31,9 +27,8 @@ Additionally prints the total Difference along with mean and standart divation f
 visualizes the correction of PAM values by correction value.
 }
 \note{
-For 'cf' it is recommended to calculate the mean of the difference
-between the original PAM and control values. Either use devision Control/PAM
-for factor and abs(PAM)-abs(Control) for correction by absolute values.
+For visualization purposes the difference between the corrected PAM and Control is used as absolute values (negative values are plotted as positive).
+Further the mean and sd is calculated for the absolute values.
 }
 \examples{
 # load data

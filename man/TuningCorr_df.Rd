@@ -15,13 +15,9 @@ use the global mean to correct PAM.}
 \item{att2}{character - Additional column name of data frame which should be used to correct by mean.
 Only necessary if the correction should use subgroups for the data in 'pos1'}
 
-\item{tuning}{\itemize{
-\item character - method for clipping the data used to calculate the mean. Either "whisker" or "quantil". If 'NULL' will perform no tuning. Default= NULL.
-}}
+\item{tuning}{character - method for clipping the data used to calculate the mean. Either "whisker" or "quantil". If 'NULL' will perform no tuning. Default= NULL.}
 
-\item{modef}{\itemize{
-\item boolean - if TRUE uses factor correction, if FALSE uses absolute values. Default=TRUE.
-}}
+\item{modef}{boolean - if TRUE uses factor correction, if FALSE uses absolute values. Default=TRUE.}
 }
 \value{
 returns a data.frame with an additional column "PAM_corr" with the corrected PAM values
@@ -31,8 +27,12 @@ and prints the respective mean values for each class or combination of classes. 
 uses the mean based on the data clipped by 'Whisker' and 'Quantil' for specified subgroups to correct the PAM values.
 }
 \details{
-If a specific class or combination of attributes has no values left after tuning the mean will be calculated based on the original data. This will lead to a warning.
-The class or combination is marked as 'keep' in the result table.
+\itemize{
+\item tuning - availible modes are "whisker" (which clips all values </> lower / upper whisker treshold in boxplot) and "quantil" (which clips all values </> 25 and 75 quantils).
+\item If a specific class or combination of attributes has no values left after tuning the mean will be calculated based on the original data. This will lead to a warning.
+The class or combination is marked as 'noData' in the result table.
+\item If a class or combination has a 'NaN' the class or combination is not existing in the dataframe. This is possible when using att1 and att2 an if not every att1 has all att2 classes.
+}
 }
 \note{
 If used without any attributes will use the global mean over all values to correct PAM. IF 'att1' is set

@@ -4,14 +4,13 @@
 #' and optional "PAM_corr" for corrected PAM values.
 #' @param al numeric - a vector of numeric values on the x axes to draw lines. Default=0
 #' @param yl numeric - ylim adjustment. Default=2
-#' @param sortby - character - column name to reorder the inoput datafram 'df'. IF set the argument 'al' will not be used.
-#' @param  titel - character - desired maintitel for the plot . Default="PAMcorrection".
+#' @param sortby character - column name to reorder the inoput datafram 'df'. IF set the argument 'al' will not be used.
+#' @param  titel character - desired maintitel for the plot . Default="PAMcorrection".
 #' @return returns a plot containing the original PAM (orange) and Control (blue) values along with the difference (grey).
 #' If corrected PAM values are available those will be plotted in red along with the differnece between the corrected PAM and COntrol values.
 #' Additionally prints the total Difference along with mean and standart divation for PAM or if given PAM corrected and Control
-#' @note For 'cf' it is recommended to calculate the mean of the difference
-#' between the original PAM and control values. Either use devision Control/PAM
-#' for factor and abs(PAM)-abs(Control) for correction by absolute values.
+#' @note For visualization purposes the difference between the corrected PAM and Control is used as absolute values (negative values are plotted as positive).
+#' Further the mean and sd is calculated for the absolute values.
 #' @author Andreas Schönberg
 #' @export plotPAMcorr
 #' @aliases plotPAMcorr

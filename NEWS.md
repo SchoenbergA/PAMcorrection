@@ -1,4 +1,7 @@
 # PAMcorrection 0.0.0.98
+* Bugfixes and fixes in documentation
+
+# PAMcorrection 0.0.0.98
 Develop version
 
 * add new function 'TuningCorr_df' uses tresholds by whisker or quantil to crop data for calculating the means and uses them on the original data.
