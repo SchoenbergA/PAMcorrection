@@ -1,4 +1,12 @@
 # PAMcorrection 0.0.0.98
+Develop version Major Fixes
+
+* TuningCorr_df - now uses abs diffenrece for boxplot
+                - delete modus for mean by absolute diffenrece
+* plotPAMcorr - add option to print green difference as real differnece (including negative values)
+- ylim can now be adjusted in both directions
+
+# PAMcorrection 0.0.0.98
 * Bugfixes and fixes in documentation
 
 # PAMcorrection 0.0.0.98

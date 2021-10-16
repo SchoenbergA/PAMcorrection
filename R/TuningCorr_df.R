@@ -6,7 +6,6 @@
 #' @param att2 character - Additional column name of data frame which should be used to correct by mean.
 #' Only necessary if the correction should use subgroups for the data in 'pos1'
 #' @param tuning character - method for clipping the data used to calculate the mean. Either "whisker" or "quantil". If 'NULL' will perform no tuning. Default= NULL.
-#' @param modef boolean - if TRUE uses factor correction, if FALSE uses absolute values. Default=TRUE.
 #' @return returns a data.frame with an additional column "PAM_corr" with the corrected PAM values
 #' and prints the respective mean values for each class or combination of classes. Uses 'tuned' data to calculate the mean values.
 #' @note If used without any attributes will use the global mean over all values to correct PAM. IF 'att1' is set
@@ -24,7 +23,7 @@
 #' dat <- read.csv(system.file("extdata","exp_PAM.csv",package = "PAMcorrection"))
 #' head(dat)
 #'
-#' # who the tuning works
+#' # how the tuning works
 #' bp <-boxplot(dat$PAM-dat$CTR)
 #' bp$stats[1,1] # lower whisker
 #' bp$stats[2,1] # lower quantil
@@ -38,9 +37,6 @@
 #'
 #' # use two classes (means for each generation depending on dilect) tuned by 'whisker'
 #' corrected <-TuningCorr_df(dat,att1 = "generation",att2 = "dilect",tuning = "whisker")
-#'
-#' # use absolute values
-#' corrected <-TuningCorr_df(dat,att1 = "generation",att2 = "dilect",tuning = "whisker",modef=F)
 
 
 
@@ -52,7 +48,7 @@ TuningCorr_df <-function(df,att1=NULL,att2=NULL,tuning=NULL,modef=T){
   }
 
   ##############################################################################
-
+  # 1. Tuning
   if (is.null(tuning)){
     # get copy with no changes
     dft <-df
@@ -61,7 +57,7 @@ TuningCorr_df <-function(df,att1=NULL,att2=NULL,tuning=NULL,modef=T){
     # copy df
     dft <- df
     # get absolut difference
-    dft$diffa <- dft$PAM-dft$CTR
+    dft$diffa <- abs(dft$PAM-dft$CTR)
     # get boxplot
     bp <-boxplot(dft$diffa)
     # clip values by whisker
@@ -74,7 +70,7 @@ TuningCorr_df <-function(df,att1=NULL,att2=NULL,tuning=NULL,modef=T){
     # copy df
     dft <- df
     # get absolut difference
-    dft$diffa <- dft$PAM-dft$CTR
+    dft$diffa <- abs(dft$PAM-dft$CTR)
     # get boxplot
     bp <-boxplot(dft$diffa)
     # clip values by whisker
@@ -89,19 +85,14 @@ TuningCorr_df <-function(df,att1=NULL,att2=NULL,tuning=NULL,modef=T){
   ##############################################################################
 
 
-  # 1. Global mean #############################################################
+  # 2. Global mean #############################################################
   # if no attribute is given, calculate global mean
   if(is.null(att1)){
-    if(modef==T){
+
       df$PAM_corr <-df$PAM * mean(dft$CTR / dft$PAM)
       cat(paste0("global mean (factor) "),mean(dft$CTR / dft$PAM))
       return(df)
-    }
-    if(modef==F){
-      df$PAM_corr <-df$PAM * mean(dft$PAM - dft$CTR)
-      cat(paste0("global mean (absolut) "),mean(dft$PAM - dft$CTR))
-      return(df)
-    }
+
   } # end global mean
   ##############################################################################
 
@@ -122,10 +113,9 @@ TuningCorr_df <-function(df,att1=NULL,att2=NULL,tuning=NULL,modef=T){
   ##############################################################################
 
 
-  # 2. Mean factor #############################################################
+  # 3. Mean factor #############################################################
 
   # for factor correction
-  if(modef==T){
   if(is.null(att2)){
   # correct by one attribute
   cat("using att 1 only",sep="\n")
@@ -187,74 +177,9 @@ TuningCorr_df <-function(df,att1=NULL,att2=NULL,tuning=NULL,modef=T){
   print(re)
   return(df)
   }
-  }# end if modef==T
+
 
   ##############################################################################
 
-
-  # 3. Mean absolute #############################################################
-  if(modef==F){
-    if(is.null(att2)){
-    # correct by one attribute
-    cat("using att 1 only",sep="\n")
-    # get uniques for each pos
-    u1 <- unique(df[,pos1])
-    # inner loop for pos1
-    for (i in 1:length(u1)) {
-      # get results to check for missing results
-      ck <- rbind(ck,c(length(dft$PAM[ dft[,pos1]==u1[i] ]),u1[i],round(mean(dft$PAM[ dft[,pos1]==u1[i] ] - dft$CTR[ dft[,pos1]==u1[i] ]),digits = 4)))
-      if(ck[nrow(ck),3]=="NaN"){
-      cat(paste0("Class '",re[nrow(ck),2],"' has no values left after tuning, using original data"),sep="\n")
-      warning(paste0("Class '",re[nrow(ck),2],"' has no values left after tuning, using original data"))
-      # use original data
-      df$PAM_corr[ df[,pos1]==u1[i] ] <-df$PAM[ df[,pos1]==u1[i] ] - mean(df$PAM[ df[,pos1]==u1[i] ] - df$CTR[ df[,pos1]==u1[i] ])
-      # store in df
-      re <- rbind(re,c(length(df$PAM[ df[,pos1]==u1[i] ]),u1[i],round(mean(df$PAM[ df[,pos1]==u1[i] ] - df$CTR[ df[,pos1]==u1[i] ]),digits = 4),"noData"))
-      } else {
-      df$PAM_corr[ df[,pos1]==u1[i] ] <-df$PAM[ df[,pos1]==u1[i] ] -    mean(dft$PAM[ dft[,pos1]==u1[i] ] - dft$CTR[ dft[,pos1]==u1[i] ])
-      re <- rbind(re,c(length(dft$PAM[ dft[,pos1]==u1[i] ]),u1[i],round(mean(dft$PAM[ dft[,pos1]==u1[i] ] - dft$CTR[ dft[,pos1]==u1[i] ]),digits = 4),"fine"))
-      } # end fork for checking
-    }# end i loop
-
-    # return
-    cat("Platzhalter1",sep="\n")
-    colnames(re) <- c("n_obj","type","mean_abs","tuning")
-    print(re)
-    return(df)
-  } else {
-    cat("using att 1 and att 2",sep="\n")
-    # correct by two attributes
-    # get uniques for each pos
-    u1 <- unique(df[,pos1])
-    u2 <- unique(df[,pos2])
-
-    # outer loop over pos2
-    for (j in 1: length(u2)) {
-
-      # inner loop for pos1
-      for (i in 1:length(u1)) {
-        ck <-rbind(ck,c(length(dft$PAM[dft[,pos1]==u1[i] & dft[,pos2]==u2[j]]),paste0(u1[i]," ",u2[j]),round(mean(dft$PAM[dft[,pos1]==u1[i] & dft[,pos2]==u2[j]] - dft$CTR[dft[,pos1]==u1[i] & dft[,pos2]==u2[j]]),digits = 4)))
-        # get results to check for missing results
-        if(ck[nrow(ck),3]=="NaN"){
-          cat(paste0("Class '",re[nrow(re),2],"' has no values left after tuning, using original data"),sep="\n")
-          warning(paste0("Class '",re[nrow(re),2],"' has no values left after tuning, using original data"))
-          df$PAM_corr[df[,pos1]==u1[i] & df[,pos2]==u2[j]] <-df$PAM[df[,pos1]==u1[i] & df[,pos2]==u2[j]] * mean(df$PAM[df[,pos1]==u1[i] & df[,pos2]==u2[j]] - df$CTR[df[,pos1]==u1[i] & df[,pos2]==u2[j]])
-          # store in df
-          re <-rbind(re,c(length(df$PAM[df[,pos1]==u1[i] & df[,pos2]==u2[j]]),paste0(u1[i]," ",u2[j]),round(mean(df$PAM[df[,pos1]==u1[i] & df[,pos2]==u2[j]] - df$CTR[df[,pos1]==u1[i] & df[,pos2]==u2[j]]),digits = 4),"noData"))
-        } else {
-          df$PAM_corr[df[,pos1]==u1[i] & df[,pos2]==u2[j]] <-df$PAM[df[,pos1]==u1[i] & df[,pos2]==u2[j]]     * mean(dft$PAM[dft[,pos1]==u1[i] & dft[,pos2]==u2[j]] - dft$CTR[dft[,pos1]==u1[i] & dft[,pos2]==u2[j]])
-          re <-rbind(re,c(length(dft$PAM[dft[,pos1]==u1[i] & dft[,pos2]==u2[j]]),paste0(u1[i]," ",u2[j]),round(mean(dft$PAM[dft[,pos1]==u1[i] & dft[,pos2]==u2[j]] - dft$CTR[dft[,pos1]==u1[i] & dft[,pos2]==u2[j]]),digits = 4),"fine"))
-
-        }# end fork for checking
-      }# end i loop
-    }# end j loop
-
-    # return
-    cat("Platzhalter1",sep="\n")
-    colnames(re) <- c("n_obj","type","mean_abs","tuning")
-    print(re)
-    return(df)
-  }
-  }# end if F
 } # end of function
 

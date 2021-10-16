@@ -3,9 +3,10 @@
 #' @param df data.frame - with column "CTR" for control values, "PAM" for pam values
 #' and optional "PAM_corr" for corrected PAM values.
 #' @param al numeric - a vector of numeric values on the x axes to draw lines. Default=0
-#' @param yl numeric - ylim adjustment. Default=2
+#' @param yl numeric - ylim adjustment. Default=c(0,2)
 #' @param sortby character - column name to reorder the inoput datafram 'df'. IF set the argument 'al' will not be used.
-#' @param  titel character - desired maintitel for the plot . Default="PAMcorrection".
+#' @param abs_dif boolean - IF TRUE plots the differences as absolute values (no negative values). Default=TRUE.
+#' @param titel character - desired maintitel for the plot . Default="PAMcorrection".
 #' @return returns a plot containing the original PAM (orange) and Control (blue) values along with the difference (grey).
 #' If corrected PAM values are available those will be plotted in red along with the differnece between the corrected PAM and COntrol values.
 #' Additionally prints the total Difference along with mean and standart divation for PAM or if given PAM corrected and Control
@@ -23,11 +24,11 @@
 #' plotPAMcorr(dat)
 #'
 #' # adjust y limit
-#' plotPAMcorr(dat,yl = 4)
+#' plotPAMcorr(dat,yl = c(-1,4))
 #'
 #' # use vertical lines
 #' abl <- seq(10,40,10)
-#' plotPAMcorr(dat,yl = 4,al = abl)
+#' plotPAMcorr(dat,yl = c(0,4),al = abl)
 #'
 #' # order values by PAM
 #' plotPAMcorr(dat,sortby = "PAM")
@@ -45,7 +46,7 @@
 
 
 
-plotPAMcorr <- function(df,al=-1,yl=2,sortby=NULL,titel="PAM Correction"){
+plotPAMcorr <- function(df,al=-1,yl=c(0,2),sortby=NULL,abs_dif=T,titel="PAM Correction"){
 
   if(is.null(sortby)==F){
     posby <-which(colnames(df)==sortby)
@@ -67,13 +68,13 @@ plotPAMcorr <- function(df,al=-1,yl=2,sortby=NULL,titel="PAM Correction"){
     titel<-paste0(titel," uncorrected")
     }
     # plot
-    cat("using original input PAM (not corrected by function)",sep="\n")
     plot(ctr,col="blue",
-         ylim=c(0,yl),
+         ylim=yl,
          main=paste0(titel),
          #sub =paste0("empty yet"),
 
-         xlab=if(is.null(sortby)==F){paste0("sorted by ",sortby)}else{"ID"},
+         xlab=if(is.null(sortby)==F){paste0("sorted by ",sortby)}else{"Index"},
+
          ylab="Value")
 
     points((pamc),col="red")
@@ -82,22 +83,34 @@ plotPAMcorr <- function(df,al=-1,yl=2,sortby=NULL,titel="PAM Correction"){
     lines(pamc,col="red")
     lines(pam,col="orange")
 
-    # div between control and corrected PAM
-    div <- ctr-(pamc)
-    lines(abs(div),col="green")
-    points(abs(div),col="green")
-    # div between control and org PAM
-    divorg <- ctr-(pam)
-    lines(abs(divorg),col="grey")
-    points(abs(divorg),col="grey")
-    # set ablines
+    if(abs_dif==T){
+      # div between control and corrected PAM
+      div <- ctr-(pamc)
+      lines(abs(div),col="green")
+      points(abs(div),col="green")
+      abline(h=mean(abs(div)),col="green")
+
+    } else if (abs_dif==F){
+      # div between control and corrected PAM
+      div <- ctr-(pamc)
+      lines((div),col="green")
+      points((div),col="green")
+    }
+      # div between control and org PAM
+      divorg <- ctr-(pam)
+      lines(abs(divorg),col="grey")
+      points(abs(divorg),col="grey")
+      abline(h=mean(abs(divorg)),col="grey")
+
+
+    # set global ablines
     abline(h=0)
     abline(v=al)
     # labels
     if(is.null(pamc)){
-      mtext(paste0("orgDiffSums: ",round(sum(abs(divorg)),2)),line = -18, adj = 0.01)
-      mtext(paste0("orgDiffMean: ",round(mean(abs(divorg)),2)),line = -19, adj = 0.01)
-      mtext(paste0("orgDiffSD: ",round(sd(abs(divorg)),2)),line = -20, adj = 0.01)
+      mtext(paste0("orgDiffSums (abs): ",round(sum(abs(divorg)),2)),line = -18, adj = 0.01)
+      mtext(paste0("orgDiffMean (abs): ",round(mean(abs(divorg)),2)),line = -19, adj = 0.01)
+      mtext(paste0("orgDiffSD (abs): ",round(sd(abs(divorg)),2)),line = -20, adj = 0.01)
     } else {
     mtext(paste0("absDiffSums: ",round(sum(abs(div)),2)),line = -18, adj = 0.01)
     mtext(paste0("absDiffMean: ",round(mean(abs(div)),2)),line = -19, adj = 0.01)

@@ -16,8 +16,6 @@ use the global mean to correct PAM.}
 Only necessary if the correction should use subgroups for the data in 'pos1'}
 
 \item{tuning}{character - method for clipping the data used to calculate the mean. Either "whisker" or "quantil". If 'NULL' will perform no tuning. Default= NULL.}
-
-\item{modef}{boolean - if TRUE uses factor correction, if FALSE uses absolute values. Default=TRUE.}
 }
 \value{
 returns a data.frame with an additional column "PAM_corr" with the corrected PAM values
@@ -44,15 +42,20 @@ with the combination for each attribute.
 dat <- read.csv(system.file("extdata","exp_PAM.csv",package = "PAMcorrection"))
 head(dat)
 
+# how the tuning works
+bp <-boxplot(dat$PAM-dat$CTR)
+bp$stats[1,1] # lower whisker
+bp$stats[2,1] # lower quantil
+bp$stats[3,1] # median
+bp$stats[4,1] # upper quantil
+bp$stats[5,1] # upper whisker
+
 # correct df by global means
 corrected <-TuningCorr_df(dat,tuning = "whisker")
 corrected <-TuningCorr_df(dat,tuning = "quantil")
 
 # use two classes (means for each generation depending on dilect) tuned by 'whisker'
 corrected <-TuningCorr_df(dat,att1 = "generation",att2 = "dilect",tuning = "whisker")
-
-# use absolute values
-corrected <-TuningCorr_df(dat,att1 = "generation",att2 = "dilect",tuning = "whisker",modef=F)
 }
 \author{
 Andreas Schönberg

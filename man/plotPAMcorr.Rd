@@ -4,7 +4,14 @@
 \alias{plotPAMcorr}
 \title{plotPAMcorr - Function for plotting of PAM correction.}
 \usage{
-plotPAMcorr(df, al = -1, yl = 2, sortby = NULL, titel = "PAM Correction")
+plotPAMcorr(
+  df,
+  al = -1,
+  yl = c(0, 2),
+  sortby = NULL,
+  abs_dif = T,
+  titel = "PAM Correction"
+)
 }
 \arguments{
 \item{df}{data.frame - with column "CTR" for control values, "PAM" for pam values
@@ -12,9 +19,11 @@ and optional "PAM_corr" for corrected PAM values.}
 
 \item{al}{numeric - a vector of numeric values on the x axes to draw lines. Default=0}
 
-\item{yl}{numeric - ylim adjustment. Default=2}
+\item{yl}{numeric - ylim adjustment. Default=c(0,2)}
 
 \item{sortby}{character - column name to reorder the inoput datafram 'df'. IF set the argument 'al' will not be used.}
+
+\item{abs_dif}{boolean - IF TRUE plots the differences as absolute values (no negative values). Default=TRUE.}
 
 \item{titel}{character - desired maintitel for the plot . Default="PAMcorrection".}
 }
@@ -39,11 +48,11 @@ head(dat)
 plotPAMcorr(dat)
 
 # adjust y limit
-plotPAMcorr(dat,yl = 4)
+plotPAMcorr(dat,yl = c(-1,4))
 
 # use vertical lines
 abl <- seq(10,40,10)
-plotPAMcorr(dat,yl = 4,al = abl)
+plotPAMcorr(dat,yl = c(0,4),al = abl)
 
 # order values by PAM
 plotPAMcorr(dat,sortby = "PAM")
