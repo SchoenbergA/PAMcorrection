@@ -1,8 +1,14 @@
-# PAMcorrection 0.0.0.98
+# PAMcorrection 0.1.0
+PreRelease Beta version
+
+* Delete unneeded old develop functions.
+
+# PAMcorrection 0.0.0.99
 Develop version Major Fixes
 
 * TuningCorr_df - now uses abs diffenrece for boxplot
                 - delete modus for mean by absolute diffenrece
+                - advanced waring mesages (now warns if any combination leads to no data and uses org data for mean prediction) further now print "mising" if combination is not possible in data.
 * plotPAMcorr - add option to print green difference as real differnece (including negative values)
 - ylim can now be adjusted in both directions
 

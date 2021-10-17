@@ -60,12 +60,13 @@ plotPAMcorr(dat,sortby = "PAM")
 # get correction value by mean
 datf <-dat
 datf$PAM_corr <-dat$PAM * mean(dat$CTR/dat$PAM) # factor
-data <-dat
-data$PAM_corr <-dat$PAM - mean(dat$PAM-dat$CTR) # factor
 
 # plot correction and use titel
 plotPAMcorr(datf,sortby = "PAM",titel="PAM corr factor")# for factor
-plotPAMcorr(data,sortby = "PAM",titel="PAM corr absolute") # for absolute
+
+# show difference in both poisitve and negative directions
+plotPAMcorr(datf,sortby = "PAM",abs_dif=F,yl=c(-1,2))
+# Note: The total and mean diffenrece is still calculcated in absolute values.
 }
 \author{
 Andreas Schönberg

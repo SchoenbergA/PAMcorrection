@@ -36,12 +36,15 @@
 #' # get correction value by mean
 #' datf <-dat
 #' datf$PAM_corr <-dat$PAM * mean(dat$CTR/dat$PAM) # factor
-#' data <-dat
-#' data$PAM_corr <-dat$PAM - mean(dat$PAM-dat$CTR) # factor
 #'
 #' # plot correction and use titel
 #' plotPAMcorr(datf,sortby = "PAM",titel="PAM corr factor")# for factor
-#' plotPAMcorr(data,sortby = "PAM",titel="PAM corr absolute") # for absolute
+#'
+#' # show difference in both poisitve and negative directions
+#' plotPAMcorr(datf,sortby = "PAM",abs_dif=F,yl=c(-1,2))
+#' # Note: The total and mean diffenrece is still calculcated in absolute values.
+
+
 
 
 
@@ -54,8 +57,6 @@ plotPAMcorr <- function(df,al=-1,yl=c(0,2),sortby=NULL,abs_dif=T,titel="PAM Corr
     # plot
     cat(paste0("dataframe sorted by ",sortby),sep="\n")
 
-    al= -1
-    cat("set 'al' to -1 due to sorting data",sep="\n")
   }
 
 
@@ -95,6 +96,8 @@ plotPAMcorr <- function(df,al=-1,yl=c(0,2),sortby=NULL,abs_dif=T,titel="PAM Corr
       div <- ctr-(pamc)
       lines((div),col="green")
       points((div),col="green")
+      cat("plotting difference (green) including negative values",sep="\n")
+      cat("plotting no mean fordifference (green)",sep="\n")
     }
       # div between control and org PAM
       divorg <- ctr-(pam)
