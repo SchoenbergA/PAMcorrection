@@ -5,7 +5,7 @@ Authors@R:
     person(given = "Andreas",
            family = "Schönberg",
            role = c("aut", "cre"),
-           email = "Schoenb4@students.uni-marburg.de")
+           email = "Schoenb8@staff.uni-marburg.de")
 Description: Tool for PAM correction.
 License: GPL (>= 2)
 Encoding: UTF-8
